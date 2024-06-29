@@ -1,0 +1,10 @@
+matplotlib>=3.5.1
+numpy>=1.22.0
+torch>=2.1.2
+transformers>=4.36.2
+networkx>=1.26.4
+torch_geometric>=2.0.4
+opencv-python>=4.5
+pillow>=9.0.1
+huggingface_hub
+segment_anything
