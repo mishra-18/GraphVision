@@ -260,11 +260,15 @@ class SegmentGraph:
             similarities, indices = torch.topk(similarities, k=len(img_embeds), largest=True)
             index = node_dist_pairs[min(indices[:beta])][0]
         else:
-            # Get the indices with similarity higher than mean and std
-            sim_tensor = sim_tensor.squeeze(1).tolist()
-            indices = self.find_large_values_squared(data=sim_tensor)
-            index = node_dist_pairs[min(indices)][0]
-
+            try:
+                # Get the indices with similarity higher than mean and std
+                sim_tensor = sim_tensor.squeeze(1).tolist()
+                indices = self.find_large_values_squared(data=sim_tensor)
+                index = node_dist_pairs[min(indices)][0]
+            except:
+                similarities, indices = torch.topk(similarities, k=len(img_embeds), largest=True)
+                beta = 2 if len(node_dist_pairs) >= 2 else 1
+                index = node_dist_pairs[min(indices[:beta])][0]
         
         fig, ax = plt.subplots()
         ax.imshow(self.image_rgb)

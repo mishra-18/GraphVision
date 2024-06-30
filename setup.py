@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='graphvision',
-    version='0.1',
+    version='0.1.2',
     packages=find_packages(),
     install_requires=[
         'matplotlib>=3.5.1',
@@ -21,7 +21,7 @@ setup(
     description='Create topology map for image segments',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/mishra-18/VisionGraph/',
+    url='https://github.com/mishra-18/GraphVision/',
     license='MIT',
     classifiers=[
         'Programming Language :: Python :: 3',
