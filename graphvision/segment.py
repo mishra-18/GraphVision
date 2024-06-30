@@ -75,8 +75,9 @@ class Generator:
                 ax.add_patch(rect)
         
       
+      
 class SegmentGraph:
-    def __init__(self, segment_dict, image_rgb, object_return=None, plot_topo = True, semantic=True):
+    def __init__(self, segment_dict, image_rgb, object_return=None, plot_topo = True, semantic=True, model_name="openai/clip-vit-base-patch32"):
         self.segment_dict = segment_dict
         self.plot_topo = plot_topo
         self.semantic=semantic
@@ -85,7 +86,6 @@ class SegmentGraph:
         
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         if semantic:
-            model_name = "openai/clip-vit-base-patch32"
             self.clip_model = CLIPModel.from_pretrained(model_name).to(self.device)
             self.clip_processor = CLIPProcessor.from_pretrained(model_name)
 
@@ -214,23 +214,23 @@ class SegmentGraph:
         plt.axis('off')  
         plt.show()  
                     
-    def get_similar_embeds(self, target, img_embeds):
+    def get_similar_embeds(self, query_entity, img_embeds):
 
-        inputs = self.clip_processor(text=target, return_tensors="pt", padding=True)
+        inputs = self.clip_processor(text=query_entity, return_tensors="pt", padding=True)
         inputs = {key: value.to(self.clip_model.device) for key, value in inputs.items()}
         with torch.no_grad():
             text_embeddings = self.clip_model.get_text_features(**inputs).cpu()
             
         similarities = F.cosine_similarity(img_embeds, text_embeddings, dim=1)
-
-        return similarities
+        
+        return similarities, img_embeds@text_embeddings.T
     
 
-    def query_segment_graph(self, graph, query_pair, node_idx=None, k_nearest=None, beta=2, show_legend=False):
+    def query_segment_graph(self, graph, query_pair, node_idx=None, k_nearest=None, beta=None, show_legend=False):
         env, target = query_pair
 
         # Env Embeddings
-        similarities = self.get_similar_embeds(env, self.image_embeddings)
+        similarities, _ = self.get_similar_embeds(env, self.image_embeddings)
         similarities, env_index = torch.topk(similarities, k=1, largest=True)
 
         # Dijkstra
@@ -239,7 +239,7 @@ class SegmentGraph:
         if len(graph.nodes) > 1:
             node_dist_pairs = list(path_lengths.items())[1:]
         else:
-            node_dist_pairs = list(path_lengths.items())[1:]
+            node_dist_pairs = list(path_lengths.items())
 
         close_nodes = []
         for i, _ in node_dist_pairs:
@@ -253,26 +253,29 @@ class SegmentGraph:
         img_embeddings = [self.image_embeddings[i] for i, _ in node_dist_pairs]
         img_embeds = torch.stack(img_embeddings)
         
-        similarities = self.get_similar_embeds(target, img_embeds=img_embeds)
-        # Get the indices of the top_k highest similarities
-        try:
+        similarities, sim_tensor = self.get_similar_embeds(target, img_embeds=img_embeds)
+
+        if beta is not None:
+            # Get the indices of the top_k highest similarities
             similarities, indices = torch.topk(similarities, k=len(img_embeds), largest=True)
             index = node_dist_pairs[min(indices[:beta])][0]
-        except:
-            similarities, indices = torch.topk(similarities, k=1, largest=True)
-            index = node_dist_pairs[indices[0]][0]
+        else:
+            # Get the indices with similarity higher than mean and std
+            sim_tensor = sim_tensor.squeeze(1).tolist()
+            indices = self.find_large_values_squared(data=sim_tensor)
+            index = node_dist_pairs[min(indices)][0]
 
         
         fig, ax = plt.subplots()
         ax.imshow(self.image_rgb)
         
         if show_legend:
+            # Create a legend
             legend_handles = [
                 Line2D([0], [0], marker='o', color='w', markerfacecolor='red', markersize=10, label='Env'),
                 Line2D([0], [0], marker='o', color='w', markerfacecolor='purple', markersize=10, label='Target') 
             ]
             
-            # Create a legend
             plt.legend(handles=legend_handles, loc='upper right', bbox_to_anchor=(1.05, 1.05), borderaxespad=0.)
 
         bbox = self.filter_seg[int(index)]["bbox"]
@@ -305,8 +308,16 @@ class SegmentGraph:
         result = {
             "env_node_idx" : env_index,
             "target_node_idx" : index,
+            "closest_nodes" : indices,
             "shortest_paths" : node_dist_pairs,
-            "embeddings_dist" : [node_dist_pairs[idx][0] for idx in indices]
+            "embeddings_dist" : [node_dist_pairs[idx][0] for idx in indices],
         }
 
         return result
+    
+    def find_large_values_squared(self, data):
+        squared_data = [x**2 for x in data]
+        mean = np.mean(squared_data)
+        std_dev = np.std(squared_data)
+        large_values = [i for i, x in enumerate(squared_data)if x > mean + 1.3*std_dev]
+        return large_values
