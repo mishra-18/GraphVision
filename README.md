@@ -2,12 +2,16 @@
 <div align="center" style="margin-bottom: 0;">
   <img src="https://github.com/mishra-18/VisionGraph/assets/155224614/3dc9e22d-2479-4f69-be7a-d47a4baa134e" width="300">
 </div>
-<div align="center"><b>Create topological segmentation map for your image</b></div>
+<div align="center"><b>Create topology map for image segments</b>
 
-## VisionGraph
-A library fascilitating generation of topological representation of the image segments. The topological graph is generated based on the segments and visual embeddings as nodes. The topological graph of the segmented image, doesn't only keep the spatial information but semantic infromation as well, this is very helpful for various tasks in visual robotics[1] and localization. 
 
-VisionGraph provides such graphical representations that let us perform visual query, and communicate with our segmentation graph, this would generally require lot of preprocessing hassle.
+[![PyPI](https://img.shields.io/badge/PyPI-V0.1.1-blue.svg)](https://pypi.org/project/graphvision/)
+
+
+## GraphVision
+A library fascilitating generation of topological representation fpr the image segments. The topological graph is created based on the segments and visual embeddings as nodes. The segment topology, doesn't only keep the spatial but semantic infromation as well, this is very helpful for various tasks in visual robotics[1] and localization. 
+
+GraphVision provides such graphical representations that let us perform visual query, and communicate with our segmentation graph, this would generally require a lot of preprocessing hassle.
 VisonGraph does it all itself, and also provides functionalities to visualize the segment topology and perfom visual query on the graph leveraging dijkstras` algorithm for localization.
 
 ## Usage
@@ -15,13 +19,13 @@ VisonGraph does it all itself, and also provides functionalities to visualize th
   <img src="https://github.com/mishra-18/VisionGraph/assets/155224614/cbd5f159-fa22-4914-85b3-91defae665ff">
 </div>
 
-The library requirements are flexible but still using its suggested to use a virtual environment
+The library requirements are flexible but still its suggested to use a virtual environment.
 ```python
-pip install visiongraph
+pip install graphvision
 ```
-Read an image as RGB, import the Generator and SegmentGraph. Initialize the generator, call the segmentation model, generate the masks and that is it, you are ready create the topological graph for your segments.
+Read an image as rgb, import the ```Generator``` and ```SegmentGraph```. Initialize the generator, call the segmentation model, generate the masks and that is it, you are ready create the topological graph for your segments.
 ```python
-from visiongraph import Generator, SegmentGraph
+from graphvision import Generator, SegmentGraph
 gen = Generator()
 mask_gen = gen.SAM()
 segments = gen.generate_masks(mask_gen, image_rgb)
@@ -34,7 +38,7 @@ sg = SegmentGraph(segments, image_rgb)
 G, centroids = sg.get_topology(dist_thres=150) # Other Optional Parameters: area_percent, add_to_bbox
 ```
 
-Two graph 'G' can be returned as a 'networkx' (default) or as a PyTorch Geormetric object. This graphical representation can now be leveraged in various vision tasks such as object localization, environment mapping in robotics based on both spatial and semantic features.
+Two graph ```G``` can be returned as a 'networkx' (default) or as a PyTorch geormetric object. This graphical representation can now be leveraged in various vision tasks such as object localization, environment mapping in robotics based on both spatial and semantic features.
 
 **Query the segment graph**
 
