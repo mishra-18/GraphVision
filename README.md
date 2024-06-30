@@ -36,7 +36,7 @@ gen = Generator()
 mask_gen = gen.SAM()
 segments = gen.generate_masks(mask_gen, image_rgb)
 ```
-You can use visualize or plot it using ```gen.plot_segments(segments)```
+You can visualize or plot it using ```gen.plot_segments(segments)```
 
 **Create the topological graph**
 ```python
