@@ -4,7 +4,7 @@
 </div>
 <div align="center"><b>Create topology map for image segments</b>
 
-[![PyPI](https://img.shields.io/badge/pypi-V0.1.2-blue.svg)](https://pypi.org/project/visiongraph/) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1mErg7NDG8XlnrVJdVjtwzkPd-TQgAhTy?usp=sharing)
+[![PyPI](https://img.shields.io/badge/PyPi-V0.1.2-blue.svg)](https://pypi.org/project/graphvision/) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1mErg7NDG8XlnrVJdVjtwzkPd-TQgAhTy?usp=sharing)
 </div>
 
 
