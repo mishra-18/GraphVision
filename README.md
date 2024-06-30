@@ -7,7 +7,7 @@
 
 [![PyPI](https://img.shields.io/badge/PyPI-V0.1.1-blue.svg)](https://pypi.org/project/graphvision/)
 
-
+</div?
 ## GraphVision
 A library fascilitating generation of topological representation fpr the image segments. The topological graph is created based on the segments and visual embeddings as nodes. The segment topology, doesn't only keep the spatial but semantic infromation as well, this is very helpful for various tasks in visual robotics[1] and localization. 
 
