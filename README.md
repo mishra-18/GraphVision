@@ -11,7 +11,7 @@
 ## GraphVision
 A library facilitating the generation of topological representations for image segments. The topological graph is created based on segments and visual embeddings as nodes. This segment topology retains not only spatial but also semantic information, making it very useful for various tasks in visual robotics[1] and localization.
 
-GraphVision provides graphical representations that enable us to perform visual queries and interact with our segmentation graph without the usual preprocessing hassle. VisionGraph handles everything and also offers functionalities to visualize the segment topology and perform visual queries on the graph, leveraging Dijkstra's algorithm for localization..
+GraphVision provides graphical representations that enable us to perform visual queries and interact with our segmentation graph without the usual preprocessing hassle. GraphVision handles everything and also offers functionalities to visualize the segment topology and perform visual queries on the graph, leveraging Dijkstra's algorithm for localization..
 
 ## Usage
 
