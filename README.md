@@ -4,15 +4,14 @@
 </div>
 <div align="center"><b>Create topology map for image segments</b>
 
+[![PyPI](https://img.shields.io/badge/pypi-V0.1.2-blue.svg)](https://pypi.org/project/visiongraph/) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1mErg7NDG8XlnrVJdVjtwzkPd-TQgAhTy?usp=sharing)
+</div>
 
-[![PyPI](https://img.shields.io/badge/PyPI-V0.1.1-blue.svg)](https://pypi.org/project/graphvision/)
 
-</div?
 ## GraphVision
-A library fascilitating generation of topological representation fpr the image segments. The topological graph is created based on the segments and visual embeddings as nodes. The segment topology, doesn't only keep the spatial but semantic infromation as well, this is very helpful for various tasks in visual robotics[1] and localization. 
+A library facilitating the generation of topological representations for image segments. The topological graph is created based on segments and visual embeddings as nodes. This segment topology retains not only spatial but also semantic information, making it very useful for various tasks in visual robotics[1] and localization.
 
-GraphVision provides such graphical representations that let us perform visual query, and communicate with our segmentation graph, this would generally require a lot of preprocessing hassle.
-VisonGraph does it all itself, and also provides functionalities to visualize the segment topology and perfom visual query on the graph leveraging dijkstras` algorithm for localization.
+GraphVision provides graphical representations that enable us to perform visual queries and interact with our segmentation graph without the usual preprocessing hassle. VisionGraph handles everything and also offers functionalities to visualize the segment topology and perform visual queries on the graph, leveraging Dijkstra's algorithm for localization..
 
 ## Usage
 <div align="center" style="margin-bottom: 0;">
@@ -23,7 +22,12 @@ The library requirements are flexible but still its suggested to use a virtual e
 ```python
 pip install graphvision
 ```
-Read an image as rgb, import the ```Generator``` and ```SegmentGraph```. Initialize the generator, call the segmentation model, generate the masks and that is it, you are ready create the topological graph for your segments.
+Read an Image
+```python
+image_bgr = cv2.imread("image.jpg")
+image_rgb = cv2.cvtColor(image_bgr, cv2.COLOR_BGR2RGB)
+```
+Initialize the generator, call the segmentation model, generate the masks and that is it! You are ready create the topological graph for your segments.
 ```python
 from graphvision import Generator, SegmentGraph
 gen = Generator()
@@ -38,11 +42,11 @@ sg = SegmentGraph(segments, image_rgb)
 G, centroids = sg.get_topology(dist_thres=150) # Other Optional Parameters: area_percent, add_to_bbox
 ```
 
-Two graph ```G``` can be returned as a 'networkx' (default) or as a PyTorch geormetric object. This graphical representation can now be leveraged in various vision tasks such as object localization, environment mapping in robotics based on both spatial and semantic features.
+The graph ```G``` can be returned as a networkx (default) or as a PyTorch geometric object. This graphical representation can now be leveraged in various vision tasks such as object localization and environment mapping in robotics, based on both spatial and semantic features..
 
 **Query the segment graph**
 
-You can also perform visual queries on the graph, to locate objects dependent on other nodes (neighbouring objects), This a naive implementation, please kindly go through the colab notebook to understand to understand it in greateer detail.
+You can also perform visual queries on the graph to locate objects dependent on other nodes (neighbouring objects). This a naive implementation, so please go through the [Colab notebook](https://colab.research.google.com/drive/1mErg7NDG8XlnrVJdVjtwzkPd-TQgAhTy?usp=sharing) to understand to understand it in greateer detail.
 ```python
 result = sg.query_segment_graph(G, query_pair=("Girl", "plant"), show_legend=True)
 ```
