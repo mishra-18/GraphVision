@@ -14,6 +14,8 @@ A library facilitating the generation of topological representations for image s
 GraphVision provides graphical representations that enable us to perform visual queries and interact with our segmentation graph without the usual preprocessing hassle. VisionGraph handles everything and also offers functionalities to visualize the segment topology and perform visual queries on the graph, leveraging Dijkstra's algorithm for localization..
 
 ## Usage
+
+Go though the [Colab Notebook](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1mErg7NDG8XlnrVJdVjtwzkPd-TQgAhTy?usp=sharing) to get a detailed overview of the library.
 <div align="center" style="margin-bottom: 0;">
   <img src="https://github.com/mishra-18/VisionGraph/assets/155224614/cbd5f159-fa22-4914-85b3-91defae665ff">
 </div>
@@ -46,7 +48,7 @@ The graph ```G``` can be returned as a networkx (default) or as a PyTorch geomet
 
 **Query the segment graph**
 
-You can also perform visual queries on the graph to locate objects dependent on other nodes (neighbouring objects). This a naive implementation, so please go through the [Colab notebook](https://colab.research.google.com/drive/1mErg7NDG8XlnrVJdVjtwzkPd-TQgAhTy?usp=sharing) to understand to understand it in greateer detail.
+You can also perform visual queries on the graph to locate objects dependent on other nodes (neighbouring objects). This a naive implementation, so please go through the [Colab notebook](https://colab.research.google.com/drive/1mErg7NDG8XlnrVJdVjtwzkPd-TQgAhTy?usp=sharing) to understand it in greater detail.
 ```python
 result = sg.query_segment_graph(G, query_pair=("Girl", "plant"), show_legend=True)
 ```
