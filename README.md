@@ -15,7 +15,7 @@ GraphVision provides graphical representations that enable us to perform visual 
 
 ## Usage
 
-Go though the [Colab Notebook](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1mErg7NDG8XlnrVJdVjtwzkPd-TQgAhTy?usp=sharing) to get a detailed overview of the library.
+Go though the [Colab Notebook](https://colab.research.google.com/drive/1mErg7NDG8XlnrVJdVjtwzkPd-TQgAhTy?usp=sharing) to get a detailed overview of the library.
 <div align="center" style="margin-bottom: 0;">
   <img src="https://github.com/mishra-18/VisionGraph/assets/155224614/cbd5f159-fa22-4914-85b3-91defae665ff">
 </div>
