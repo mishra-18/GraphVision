@@ -2,7 +2,7 @@
 <div align="center" style="margin-bottom: 0;">
   <img src="https://github.com/mishra-18/VisionGraph/assets/155224614/3dc9e22d-2479-4f69-be7a-d47a4baa134e" width="300">
 </div>
-<div align="center"><b>Create topology map for image segments</b>
+<div align="center"><b>Create topological graph for image segments</b>
 
 [![PyPI](https://img.shields.io/badge/PyPi-V0.1.2-blue.svg)](https://pypi.org/project/graphvision/) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1mErg7NDG8XlnrVJdVjtwzkPd-TQgAhTy?usp=sharing)
 </div>
